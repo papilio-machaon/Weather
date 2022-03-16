@@ -1,10 +1,10 @@
 @startuml
-WeatherForecaster <|-- ForecasterAdaptor
+ForecasterClient <|-- ForecasterAdaptor
 class ForecasterAdaptor {
     com.weather.Forecaster forecaster
 }
-WeatherForecaster <|-- CachingWeatherForecaster
-class CachingWeatherForecaster {
-    WeatherForecaster delegate
+ForecasterClient <|-- CachingForecasterClient
+class CachingForecasterClient {
+    ForecasterClient delegate
 }
 @enduml
