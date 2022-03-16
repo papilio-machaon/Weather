@@ -1,0 +1,10 @@
+@startuml
+WeatherForecaster <|-- ForecasterAdaptor
+class ForecasterAdaptor {
+    com.weather.Forecaster forecaster
+}
+WeatherForecaster <|-- CachingWeatherForecaster
+class CachingWeatherForecaster {
+    WeatherForecaster delegate
+}
+@enduml
