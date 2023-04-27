@@ -3,6 +3,7 @@ package com.oocode;
 import com.oocode.WeatherForecaster;
 import com.teamoptimization.MetOfficeForecasterClient;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class CachingForecaster implements WeatherForecaster {
     }
 
     @Override
-    public MetOfficeForecasterClient.Forecast forecastFor(DayOfWeek dayOfWeek, String place) {
+    public MetOfficeForecasterClient.Forecast forecastFor(DayOfWeek dayOfWeek, String place) throws IOException {
         for (int i=0; i < storedForecasts.size(); i++) {
             if( dayOfWeek.equals(storedForecasts.get(i).dayOfWeek) && place.equals(storedForecasts.get(i).place)) {
                 return storedForecasts.get(i).forecast;

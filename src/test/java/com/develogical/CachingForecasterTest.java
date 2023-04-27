@@ -5,6 +5,7 @@ import com.oocode.WeatherForecaster;
 import com.teamoptimization.MetOfficeForecasterClient;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 
 import static junit.framework.TestCase.assertEquals;
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class CachingForecasterTest {
     @Test
-    public void getsForecastFromDelegateIfNeverSeenBefore() {
+    public void getsForecastFromDelegateIfNeverSeenBefore() throws IOException {
         WeatherForecaster delegate = mock(WeatherForecaster.class);
         MetOfficeForecasterClient.Forecast expectedForecast = new MetOfficeForecasterClient.Forecast(1, 2, "cold");
 
@@ -30,7 +31,7 @@ public class CachingForecasterTest {
     }
 
     @Test
-    public void getsForecastFromCacheWhenCalledTwice() {
+    public void getsForecastFromCacheWhenCalledTwice() throws IOException {
         WeatherForecaster delegate = mock(WeatherForecaster.class);
         MetOfficeForecasterClient.Forecast expectedForecast = new MetOfficeForecasterClient.Forecast(1, 2, "cold");
 
