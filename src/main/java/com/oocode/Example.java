@@ -8,15 +8,23 @@ import java.time.DayOfWeek;
 
 public class Example {
     public static void main(String[] args) throws IOException {
-        WeatherForecaster weatherForecaster = new MetOfficeAdaptor();
-        CachingForecaster cachingForecaster = new CachingForecaster(weatherForecaster);
+        WeatherForecaster weatherForecasterMet = new MetOfficeAdaptor();
+        WeatherForecaster weatherForecasterNavy = new NavyAdaptor();
+        CachingForecaster cachingForecasterMet = new CachingForecaster(weatherForecasterMet);
+        CachingForecaster cachingForecasterNavy = new CachingForecaster(weatherForecasterNavy);
+        AveragingClient averagingClient = new AveragingClient(cachingForecasterMet, cachingForecasterNavy);
 
         if (args.length != 2) {
             throw new RuntimeException("Must specify Day and Place");
         }
-        forecast(args[0], args[1], cachingForecaster);
-        forecast(args[0], args[1], cachingForecaster);
-        forecast(args[0], args[1], cachingForecaster);
+        forecast(args[0], args[1], cachingForecasterMet);
+        forecast(args[0], args[1], cachingForecasterMet);
+        forecast(args[0], args[1], cachingForecasterMet);
+        forecast(args[0], args[1], cachingForecasterNavy);
+        forecast(args[0], args[1], cachingForecasterNavy);
+        forecast(args[0], args[1], averagingClient);
+        forecast(args[0], args[1], averagingClient);
+        forecast(args[0], args[1], averagingClient);
     }
 
     private static void forecast(String day, String place, WeatherForecaster weatherForecaster) throws IOException {
@@ -24,13 +32,4 @@ public class Example {
         System.out.printf("forecaster: %s day=%s min=%s max=%s description=%s%n",
                 place, day, forecast.minTemp, forecast.maxTemp, forecast.description);
     }
-
-    private static void forecast2(String day, String place) throws IOException {
-        NavyForecastingClient forecasting = new NavyForecastingClient();
-        DayOfWeek dayOfWeek = DayOfWeek.valueOf(day.toUpperCase());
-        int minTemp = forecasting.min(dayOfWeek, place);
-        int maxTemp = forecasting.max(dayOfWeek, place);
-        String description = forecasting.desc(dayOfWeek, place);
-        System.out.printf("forecaster: %s day=%s min=%s max=%s description=%s%n",
-                place, day, minTemp, maxTemp, description);    }
 }
